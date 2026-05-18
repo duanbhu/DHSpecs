@@ -1,0 +1,91 @@
+{
+  "name": "DHPaddleLiteSDK",
+  "version": "1.0.0",
+  "summary": "基于PaddleLite实现OCR识别",
+  "description": "DHPaddleLiteSDK 提供基于 PaddleLite 的端侧 OCR 能力，包含文本识别与手机号识别组件。",
+  "homepage": "https://github.com/duanbhu/DHPaddleLiteSDK",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "dbh": "310701836@qq.com"
+  },
+  "source": {
+    "http": "https://github.com/duanbhu/DHPaddleLiteSDK/releases/download/1.0.0/DHPaddleLiteSDK-1.0.0.zip"
+  },
+  "platforms": {
+    "ios": "12.0"
+  },
+  "default_subspecs": "Core",
+  "static_framework": true,
+  "subspecs": [
+    {
+      "name": "Core",
+      "dependencies": {
+        "PaddleLiteiOS": [
+          "~> 0.0.5"
+        ]
+      },
+      "source_files": [
+        "DHPaddleLiteSDK/Classes/DLPaddleLiteSDK.h",
+        "DHPaddleLiteSDK/Classes/Private/*.{h,m,mm}",
+        "DHPaddleLiteSDK/Classes/PaddleLiteTextRecognition/*.{h,m,mm}",
+        "DHPaddleLiteSDK/paddleUtil/*"
+      ],
+      "public_header_files": [
+        "DHPaddleLiteSDK/Classes/DLPaddleLiteSDK.h",
+        "DHPaddleLiteSDK/Classes/PaddleLiteTextRecognition/*.h"
+      ],
+      "private_header_files": [
+        "DHPaddleLiteSDK/Classes/Private/*.h",
+        "DHPaddleLiteSDK/paddleUtil/*.{hpp,h}"
+      ],
+      "frameworks": [
+        "CoreMedia",
+        "AssetsLibrary",
+        "AVFoundation"
+      ],
+      "pod_target_xcconfig": {
+        "DEFINES_MODULE": "YES",
+        "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "i386",
+        "VALID_ARCHS[sdk=iphonesimulator*]": "",
+        "OTHER_LDFLAGS": "$(inherited) -undefined dynamic_lookup"
+      }
+    },
+    {
+      "name": "OCRModelV4",
+      "dependencies": {
+        "DHPaddleLiteSDK/Core": []
+      },
+      "resource_bundles": {
+        "DHPaddleLiteSDKOCRModelV4": [
+          "DHPaddleLiteSDK/Classes/config.txt",
+          "DHPaddleLiteSDK/Classes/models/ppocrv4/*.nb",
+          "DHPaddleLiteSDK/Classes/labels/ppocrv4_dict.txt"
+        ]
+      }
+    },
+    {
+      "name": "OCRModelV5",
+      "dependencies": {
+        "DHPaddleLiteSDK/Core": []
+      },
+      "resource_bundles": {
+        "DHPaddleLiteSDKOCRModelV5": [
+          "DHPaddleLiteSDK/Classes/config.txt",
+          "DHPaddleLiteSDK/Classes/models/ppocrv5/*.nb",
+          "DHPaddleLiteSDK/Classes/labels/ppocrv5_dict.txt"
+        ]
+      }
+    },
+    {
+      "name": "PhoneNumberRecognizer",
+      "dependencies": {
+        "DHPaddleLiteSDK/Core": []
+      },
+      "source_files": "DHPaddleLiteSDK/Classes/PhoneNumberRecognizer/*.{h,m,mm}",
+      "public_header_files": "DHPaddleLiteSDK/Classes/PhoneNumberRecognizer/*.h"
+    }
+  ]
+}
